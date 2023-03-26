@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const GlobalAuthClass = require('../../../modules/middleware/auth');
-const CategoryController = require('../controllers/CategoryController');
+const ProudctController = require('../controllers/ProductController');
 
 const Multer = require('multer')
 const storage = Multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "storage/category");
+        cb(null, "storage/product");
     },
     filename: (req, file, cb) => {
         const ext = file.mimetype.split("/")[1];
@@ -29,9 +29,8 @@ const storage = Multer.diskStorage({
 var upload = Multer({
     storage: storage,
 });
-router.post('/getCategoryListings', GlobalAuthClass.adminAuthenticate, CategoryController.index);
-router.post('/categoryManagement', GlobalAuthClass.adminAuthenticate, upload.single('image'), CategoryController.store);
-router.post('/getCategorybyId', GlobalAuthClass.adminAuthenticate, CategoryController.detail);
-router.post('/deleteCategory', GlobalAuthClass.adminAuthenticate, CategoryController.delete);
-
+router.post('/list', GlobalAuthClass.adminAuthenticate, ProudctController.index);
+router.post('/create', GlobalAuthClass.adminAuthenticate, upload.array('image'), ProudctController.store);
+router.post('/detail', GlobalAuthClass.adminAuthenticate, ProudctController.detail);
+router.post('/delete', GlobalAuthClass.adminAuthenticate, ProudctController.delete);
 module.exports = router;

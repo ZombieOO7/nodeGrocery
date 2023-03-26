@@ -3,9 +3,22 @@ const promise = require('bluebird');
 const fs = require('fs');
 
 class SubCategoryService{
-  async list(req){
+  async list(body){
     try{
-      let subCategories = await SubCategory.find({}).populate('category');
+      let where = {};
+      if('_id' in body){
+        where = {
+          category:body._id
+        }
+      }
+      let {page_no,limit} = body;
+      let subCategories;
+      if(page_no && limit){
+        var page = (page_no-1) * limit; 
+        subCategories = await SubCategory.find(where).populate('category').limit(limit).skip(page);
+      }else{
+        subCategories = await SubCategory.find(where).populate('category');
+      }
       let count = await SubCategory.count({});
       return { subCategories: subCategories, total: count};
     }catch(error){

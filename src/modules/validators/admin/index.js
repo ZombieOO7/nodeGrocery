@@ -108,6 +108,23 @@ class Validator {
       return promise.reject(error.details[0].message)
     }
   }
+  async productStoreValidation(body){
+    try {
+      const schema = joi.object({
+        admin_id: joi.optional(),
+        _id: joi.optional(),
+        images: joi.string().optional(),
+        name: joi.required(),
+        description: joi.optional(),
+        category: joi.required(),
+        subCategory: joi.required(),
+        status: joi.optional(),
+      })
+      return await schema.validateAsync(body, options)
+    } catch (error) {
+      return promise.reject(error.details[0].message)
+    }
+  }
 }
 
 module.exports = new Validator();

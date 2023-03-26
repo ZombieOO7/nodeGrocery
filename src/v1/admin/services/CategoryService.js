@@ -1,11 +1,19 @@
 const {Category,conn} = require('../../../data/models/index');
 const promise = require('bluebird');
 const fs = require('fs');
+const path = require('path');
 
 class CategoryService{
-  async list(req){
+  async list(body){
     try{
-      let categories = await Category.find({});
+      let categories; 
+      let {page_no,limit} = body;
+      if(page_no && limit){
+        var page = (page_no-1) * limit;
+        categories = await Category.find({}).limit(limit).skip(page);
+      }else{
+        categories = await Category.find({});
+      }
       let count = await Category.count({});
       return { categories: categories, total: count};
     }catch(error){
@@ -23,7 +31,8 @@ class CategoryService{
       }
       if(req.file && req.file != undefined && req.file != null){
         if(category !=null && category.image != null){
-          fs.unlinkSync(__dirname+`storage/category/${category.image}`);
+          const image = path.join(__dirname,`../../../../storage/category/${category.image}`);
+          // fs.unlinkSync(`${category.image}`);
         }
         req.body.image = req.file.filename;
       }

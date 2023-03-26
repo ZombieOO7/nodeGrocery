@@ -3,9 +3,17 @@ const promise = require('bluebird');
 const fs = require('fs');
 
 class BannerService{
-  async list(req){
+  async list(body){
     try{
-      let banners = await Banner.find({});
+      // let banners = await Banner.find({});
+      let {page_no,limit} = body;
+      let banners;
+      if(page_no && limit){
+        var page = (page_no-1) * limit; 
+        banners = await Banner.find({}).limit(limit).skip(page);
+      }else{
+        banners = await Banner.find({});
+      }
       let count = await Banner.count({});
       return { banners: banners, total: count};
     }catch(error){
