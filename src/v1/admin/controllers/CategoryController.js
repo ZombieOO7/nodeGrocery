@@ -1,5 +1,5 @@
 const AdminValidator = require('../../../modules/validators/admin');
-const CategoryService = require('../services/CategoryService')
+const CategoryService = require('../../services/CategoryService')
 const responseHelper = require('../resources/response');
 
 class CategoryController {

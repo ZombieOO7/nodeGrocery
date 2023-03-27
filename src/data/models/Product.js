@@ -19,7 +19,7 @@ module.exports = (mongoose) => {
             type: String,
             required: false,
         },
-        image: [{ 
+        image: [{
             type: Schema.Types.ObjectId, 
             ref: 'ProductMedia' 
         }],

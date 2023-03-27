@@ -1,4 +1,4 @@
-const {Product,conn,ProductMedia} = require('../../../data/models/index');
+const {Product,conn,ProductMedia} = require('../../data/models');
 const promise = require('bluebird');
 const fs = require('fs');
 
@@ -6,13 +6,19 @@ const fs = require('fs');
 class ProductService{
   async list(body){
     try{
-      let {page_no,limit} = body;
+      let {page_no,limit,_id} = body;
       let products;
+      let where = {};
+      if('_id' in body){
+        where = {
+          subCategory:_id
+        };
+      }
       if(page_no && limit){
         var page = (page_no-1) * limit; 
-        products = await Product.find({}).populate('category').limit(limit).skip(page);
+        products = await Product.find(where).populate('category','_id name').populate('subCategory','_id name').populate('image','_id image').sort([['createdAt','DESC']]).limit(limit).skip(page);
       }else{
-        products = await Product.find({}).populate('category');
+        products = await Product.find(where).populate('category','_id name').populate('subCategory','_id name').populate('image','_id image').sort([['createdAt','DESC']]);
       }
       let count = await Product.count({});
       return { products: products, total: count};
@@ -49,7 +55,7 @@ class ProductService{
   }
   async detail(id){
     try{
-      let product = await Product.findOne({_id:id}).populate('category').populate('subCategory').populate('image');
+      let product = await Product.findOne({_id:id}).populate('category','_id name').populate('subCategory','_id name').populate('image','_id image');
       console.log('product =======>',product);
       if(product == null){
         throw new Error('RECORD_NOT_FOUND');

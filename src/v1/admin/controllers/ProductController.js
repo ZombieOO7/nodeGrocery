@@ -1,5 +1,5 @@
 const AdminValidator = require('../../../modules/validators/admin');
-const ProductService = require('../services/ProductService')
+const ProductService = require('../../services/ProductService')
 const responseHelper = require('../resources/response');
 
 class ProductController {
@@ -16,7 +16,7 @@ class ProductController {
     try {
       await AdminValidator.productStoreValidation(req.body);
       let product = await ProductService.store(req);
-      responseHelper.success(res, 'SUCCESS', product)
+      responseHelper.success(res, 'SUCCESS', product);
     } catch (error) {
       console.log('error ======>', error)
       responseHelper.error(res, error.message, error.code || 500);

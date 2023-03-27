@@ -12,7 +12,4 @@ router.post('/sign-up', GlobalAuthClass.initialAuthenticate,UserController.signu
 // sign in api
 router.post('/sign-in', GlobalAuthClass.initialAuthenticate,UserController.signin);
 
-// verify email address
-router.get('/verify-email/:id', UserController.verifyMail);
-
 module.exports = router;

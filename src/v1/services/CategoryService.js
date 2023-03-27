@@ -1,4 +1,4 @@
-const {Category,conn} = require('../../../data/models/index');
+const {Category,conn} = require('../../data/models');
 const promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
@@ -10,9 +10,9 @@ class CategoryService{
       let {page_no,limit} = body;
       if(page_no && limit){
         var page = (page_no-1) * limit;
-        categories = await Category.find({}).limit(limit).skip(page);
+        categories = await Category.find({}).sort([['createdAt','DESC']]).limit(limit).skip(page);
       }else{
-        categories = await Category.find({});
+        categories = await Category.find({}).sort([['createdAt','DESC']]);
       }
       let count = await Category.count({});
       return { categories: categories, total: count};

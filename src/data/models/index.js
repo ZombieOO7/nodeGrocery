@@ -20,7 +20,6 @@ if(process.env.DB_CONNECTION =='mongodb'){
     .forEach(file => {
         const model = require(path.join(__dirname, file))(mongoose);
         db[model.collection.modelName] = model;
-        console.log('model ======>',model)
     });
 }else{
     let sequelize = new Sequelize(process.env.dbDatabase, process.env.dbUserName, process.env.dbPassword, {

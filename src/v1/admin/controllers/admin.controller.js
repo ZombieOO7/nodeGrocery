@@ -1,5 +1,5 @@
 const AdminValidator = require('../../../modules/validators/admin');
-const adminService = require('../../admin/services/admin.service');
+const adminService = require('../../services/admin.service');
 const responseHelper = require('../resources/response');
 class AdminController {
 	async logIn(req, res) {

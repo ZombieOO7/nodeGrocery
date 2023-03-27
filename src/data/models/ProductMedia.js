@@ -5,7 +5,8 @@ module.exports = (mongoose) => {
     const schema = new Schema({
         product:{
             type:Schema.Types.ObjectId,
-            ref: 'Product'
+            ref: 'Product',
+            required: false,
         },
         image:{
             type: String,

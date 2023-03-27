@@ -3,13 +3,21 @@ const { Schema } = mongoose;
 
 module.exports = (mongoose) => {
     const deviceSchema = new Schema({
-        id: {
+        user: {
             type:Schema.Types.ObjectId,
-            required:true,
+            ref: 'User'
         },
-        fk_user_id: {
-            type:Schema.Types.ObjectId,
-            ref: 'Users'
+        device_id:{
+            type: String,
+            required:false,
+        },
+        device_type:{
+            type: Number,
+            required:false,
+        },
+        token:{
+            type: String,
+            required:false,
         },
     },{
         timestamps: true

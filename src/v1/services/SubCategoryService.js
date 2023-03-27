@@ -1,9 +1,9 @@
-const {SubCategory,conn} = require('../../../data/models/index');
+const {SubCategory,conn} = require('../../data/models');
 const promise = require('bluebird');
 const fs = require('fs');
 
 class SubCategoryService{
-  async list(body){
+  async   list(body){
     try{
       let where = {};
       if('_id' in body){
@@ -15,9 +15,9 @@ class SubCategoryService{
       let subCategories;
       if(page_no && limit){
         var page = (page_no-1) * limit; 
-        subCategories = await SubCategory.find(where).populate('category').limit(limit).skip(page);
+        subCategories = await SubCategory.find(where).populate('category','_id name').sort([['createdAt','DESC']]).limit(limit).skip(page);
       }else{
-        subCategories = await SubCategory.find(where).populate('category');
+        subCategories = await SubCategory.find(where).populate('category','_id name').sort([['createdAt','DESC']]);
       }
       let count = await SubCategory.count({});
       return { subCategories: subCategories, total: count};

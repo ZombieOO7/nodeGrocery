@@ -1,7 +1,7 @@
 const promise = require('bluebird');
 const jwt = require('jsonwebtoken');
-const Helper = require('../../../utills/helper');
-const {Admin} = require('../../../data/models');
+const Helper = require('../../utills/helper');
+const {Admin} = require('../../data/models');
 class AdminService {
   async signIn(body) {
     try {

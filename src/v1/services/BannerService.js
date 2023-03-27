@@ -1,4 +1,4 @@
-const {Banner,conn} = require('../../../data/models/index');
+const {Banner,conn} = require('../../data/models');
 const promise = require('bluebird');
 const fs = require('fs');
 

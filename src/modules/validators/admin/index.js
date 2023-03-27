@@ -16,15 +16,15 @@ class Validator {
   async validateHeaders(headers) {
     try {
       const schema = joi.object({
-        language: joi.string().required(),
+        // language: joi.string().required(),
         authorization: joi.string().required(),
         device_token: joi.string().optional(),
         device_id: headers.app_version ? joi.string().required() : joi.string().optional(),
         device_type: headers.app_version ? joi.number().required() : joi.string().optional(),
-        web_app_version: headers.web_app_version ? joi.any().required() : joi.any().optional(),
-        app_version: headers.app_version ? joi.any().required() : joi.any().optional(),
-        os: joi.any().required(),
-        timezone: headers.app_version ? joi.any().required() : joi.any().optional(),
+        // web_app_version: headers.web_app_version ? joi.any().required() : joi.any().optional(),
+        // app_version: headers.app_version ? joi.any().required() : joi.any().optional(),
+        // os: joi.any().required(),
+        // timezone: headers.app_version ? joi.any().required() : joi.any().optional(),
       }).unknown();
       await schema.validateAsync(headers, options);
     } catch (error) {

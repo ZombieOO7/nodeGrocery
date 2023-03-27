@@ -1,5 +1,5 @@
 const AdminValidator = require('../../../modules/validators/admin');
-const BannerService = require('../services/BannerService');
+const BannerService = require('../../services/BannerService');
 const responseHelper = require('../resources/response');
 
 class BannerController {
